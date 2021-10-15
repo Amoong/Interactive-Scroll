@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stroke Example</title>
+    <style>
+      body {
+        overflow-x: hidden;
+        height: 500vh;
+      }
+
+      .fixed-elem {
+        position: fixed;
+        left: 0;
+        width: 100%;
+      }
+
+      .ribbon-path path {
+        fill: none;
+        stroke: #ff0044;
+        stroke-width: 62;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1401;
+        stroke-dashoffset: 1401;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="fixed-elem ribbon-path">
+      <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450">
+        <path
+          class="st1"
+          d="M709,41.5c-194,38-387,122-455,159c-64.13,34.89-73.4,42.42,20,26c82.5-14.5,126.34-33.68,185-38 c47.5-3.5,69.22,7.98-11,39c-75,29-251,98-459,169"
+        ></path>
+      </svg>
+    </span>
+    <script>
+      const $path = document.querySelector(".ribbon-path path");
+      const STROKE_LENGTH = 1401;
+      let progress;
+
+      window.addEventListener("load", () => {
+        window.addEventListener("scroll", () => {
+          progress = window.pageYOffset / (document.body.offsetHeight - window.innerHeight);
+          if (progress < 0) progress = 0;
+          if (progress > 1) progress = 1;
+
+          const dashOffset = STROKE_LENGTH - progress * STROKE_LENGTH * 2;
+
+          $path.style.strokeDashoffset = dashOffset;
+        });
+      });
+    </script>
+  </body>
+</html>
